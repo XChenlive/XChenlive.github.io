@@ -57,4 +57,16 @@ switch($QUALITY){
 preg_match_all($QUALITY_REGEX, get_data($rawURL), $playURL, PREG_PATTERN_ORDER);
 //header("Content-type: application/vnd.apple.mpegurl");
 //header("Location: " . $playURL[1][0]);
-echo $playURL[1][0];
+if(empty($_GET['key'])){
+$playstream=$playURL[1][0];
+$current =get_data($playstream);
+    $arryList = array();
+	$arryCount = preg_match_all('/.*?\.ts/', $current, $arryList);
+			for($i = 0; $i < $arryCount; $i++) {
+    $current = str_replace($arryList[0][$i],'?id='.$id.'$q='.$QUALITY.'&key='.$arryList[0][$i], $current);
+			}
+			print_r($current);
+}else{
+   
+ $ts=get_data($_GET['key']);
+}
