@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+header('Content-Type:text/json;charset=UTF-8');
 $id = $_GET["id"];
 $QUALITY = $_GET["q"];
 $channel_id = array(
@@ -68,5 +70,5 @@ $current =get_data($playstream);
 			print_r($current);
 }else{
    
- $ts=get_data($_GET['key']);
+ echo $ts=get_data($_GET['key']);
 }
