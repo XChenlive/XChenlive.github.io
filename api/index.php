@@ -1,63 +1,60 @@
 <?php
-error_reporting(0);
-header('Content-Type:text/json;charset=UTF-8');
-$key="@_._@_@_._@_@_._@";
-$url = isset($_GET['url'])?$_GET['url']:'';
-$zhurl='https://everydaytv.top';
-$header=array(
-    'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 15_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1',
-  );
-$ss=curl($url,$header);
-preg_match('/<h1[^>]*>(.*?)<\/h1>/', $ss, $matches);
-preg_match('/iframe src="(.*?)" width="(.*?)" height="(.*?)" style="(.*?)"/',$ss,$x);
-$as=curl($zhurl.$x[1],$header);
-preg_match('/var str=de\\("([^"]+)"\\)/', $as, $y);
-preg_match('/replace\\(\\/(.*?)\\/g/', $as, $z);
-$str = base64_decode(de(str_replace($z[1],'M',$y[1])));
-if($str){
-$liebiao=array(
-            'Code'=>200,
-            'ChannelName'=>$matches[1],
-            'ChannelUrl'=>$str,
-          );
-}else{$liebiao=array(
-            'Code'=>400,
-            'message'=>'fail',
-          );}    
-    //header('Location:'.$str);
-die(json_encode($liebiao, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-function de($str) {
-$str = preg_replace("/~/", "A", $str);
-$str = preg_replace("/:/", "B", $str);
-$str = preg_replace("/-/", "C", $str);
-$str = preg_replace("/@/", "D", $str);
-$str = preg_replace("/#/", "F", $str);
-$str = preg_replace("/%/", "G", $str);
-$str = preg_replace("/'/", "H", $str);
-$str = preg_replace("/&/", "J", $str);
-$str = preg_replace("/\*/", "K", $str);
-$str = preg_replace("/\?/", "L", $str);
-$str = preg_replace("/;/", "N", $str);
-$str = preg_replace("/!/", "S", $str);
-$str = preg_replace("/_/", "V", $str);
-$str = preg_replace("/\)/", "X", $str);
-$str = preg_replace("/\(/", "Z", $str);
-return $str;
-}
-function curl($url,$header,$data=null){
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$id = $_GET["id"];
+$QUALITY = $_GET["q"];
+$channel_id = array(
+    "tvbs" => "2mCSYvcfhtc",//TVBS新闻
+    "ttv" => "xL0ch83RAK8",//台视新闻
+    "set" => "FoBfXvlOR6I",//三立新闻
+    "ctv" => "TCnaIE_SAtM",//中视新闻
+    "ftv" => "P8DRJChuQQQ",//民视新闻
+    "ebc" => "R2iMq5LKXco",//东森新闻
+    "ebcf" => "ABn_ccXn_jc",//东森财经
+    "cti" => "_QbRXRnHMVY",//中天新闻
+    "gntv" => "HXcm22-69Og",//寰宇新闻
+    "cgtn" => "FGabkYr-Sfs",//CGTN Live
+    "nhk" => "f0lYkdA-Gtw",//NHK World
+    "fr24" => "h3MuIUNCCzI",//France 24
+    "pinhfr" => "8ysjF7BCtRE",//凤凰卫视 60fps
+    "cgtnhfr" => "oWwQuAN-KZc",//CGTN 60fps
+);
 
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-if(!empty($data)){
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-  }
-curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
-$data = curl_exec($ch);
-curl_close($ch);
-return $data;
+function get_data($url){
+    $ch = curl_init();
+    $timeout = 5;
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_USERAGENT, "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
+    curl_setopt($ch, CURLOPT_REFERER, "http://facebook.com");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return $data;
 }
+
+$string = get_data('https://www.youtube.com/watch?v=' . $channel_id[$id]);
+preg_match_all('/hlsManifestUrl(.*m3u8)/', $string, $matches, PREG_PATTERN_ORDER);
+$rawURL = str_replace("\/", "/", substr($matches[1][0], 3));
+switch($QUALITY){
+	case '301': /*301 =1920x1080 60FPS*/
+		$QUALITY_REGEX ='/(https:\/.*\/301\/.*index.m3u8)/';
+           	break;
+	case '300': /* 300 = 1280x720 60FPS */
+		$QUALITY_REGEX ='/(https:\/.*\/300\/.*index.m3u8)/';
+	break;
+	case '96': /* 96 =1920x1080 */
+		$QUALITY_REGEX ='/(https:\/.*\/96\/.*index.m3u8)/';
+	break;
+	case '95': /* 95 = 1280x720 */
+		$QUALITY_REGEX ='/(https:\/.*\/95\/.*index.m3u8)/';
+	break;
+	case '94': /* 94 = 960x480 */
+		$QUALITY_REGEX ='/(https:\/.*\/94\/.*index.m3u8)/';
+	break;
+	default:
+		$QUALITY_REGEX ='/(https:\/.*\/96\/.*index.m3u8)/';
+}
+preg_match_all($QUALITY_REGEX, get_data($rawURL), $playURL, PREG_PATTERN_ORDER);
+//header("Content-type: application/vnd.apple.mpegurl");
+//header("Location: " . $playURL[1][0]);
+echo $playURL[1][0];
