@@ -234,7 +234,8 @@ echo '#EXTM3U'.PHP_EOL;
 $data=curl('https://www.histar.tv/live/'.$playurl);
 preg_match('/"playUrl":"(.*?)"/', $data, $matches);
 $play=str_replace('\u0026','&',$matches[1]);
-header('Content-Type:application/vnd.apple.mpegurl');
+//header('Content-Type:application/vnd.apple.mpegurl');
+header('content-type:application/x-mpegURL');
 echo curl($play);
 }}
 
