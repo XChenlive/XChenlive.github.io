@@ -5,7 +5,7 @@ $key="@_._@_@_._@_@_._@";
 $id = isset($_GET['id'])?$_GET['id']:'';
 $type = $_GET['type'];
 $json = array(
-    array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/76f6ac22de1631dce56550d51c9469bb.png','id'=>'75','name'=>'CCTV-1 综合','liveid'=>'cctv1'),
+    /*array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/76f6ac22de1631dce56550d51c9469bb.png','id'=>'75','name'=>'CCTV-1 综合','liveid'=>'cctv1'),
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/e657b56596d96fffff3074eba0a738f0.png','id'=>'97','name'=>'CCTV-2 财经','liveid'=>'cctv2'),
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/7342c95efd04ed9793cbfc5a0a8c879e.png','id'=>'98','name'=>'CCTV-3 综艺','liveid'=>'cctv3'),
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/e0163c90dfbd0e5f61b4211a690fc9f6.png','id'=>'99','name'=>'CCTV-4 中文国际','liveid'=>'cctv4'),
@@ -57,7 +57,7 @@ $json = array(
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/ae4cc844873c10620a98d5610afdceb9.png','id'=>'142','name'=>'天津卫视','liveid'=>'tianjin'),
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/3011fd583d4a12fddceb9bff10f5729d.png','id'=>'136','name'=>'宁夏卫视','liveid'=>'ningxia'),
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/2394d416aabb7865ed790faefd263ec5.png','id'=>'115','name'=>'北京卫视','liveid'=>'beijing'),
-    array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/c97c03243af4d641d4e25f4ef87cb3cc.png','id'=>'132','name'=>'吉林卫视','liveid'=>'jilin'),
+    array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/c97c03243af4d641d4e25f4ef87cb3cc.png','id'=>'132','name'=>'吉林卫视','liveid'=>'jilin'),*/
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/399c9f39670f0184e9f47486da2225ac.png','id'=>'155','name'=>'TVB 翡翠台','liveid'=>'feicui'),
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-04-12/50369f61dd95ed0757f891893415ae3d.png','id'=>'278','name'=>'TVB 无线新闻台','liveid'=>'tvb-news'),
     array('logo'=>'https://d3ifppxyz9sa2s.cloudfront.net/media/img/2023-05-25/83fa11d0d5cedb3a1208c2ddd625780a.png','id'=>'548','name'=>'TVB 星河台','liveid'=>'tvb-xinghe'),
@@ -176,7 +176,7 @@ $json=json_encode($json);
 $json=json_decode($json);
 if ($type == 'txt') {
   // 密钥正确，将JSON转换为列表
-echo '星视界直播,#genre#'.PHP_EOL;
+echo '港澳直播,#genre#'.PHP_EOL;
   // 输出列表
   foreach ($json as $quity) {
         $cid= $quity->id;
@@ -192,7 +192,7 @@ echo '#EXTM3U'.PHP_EOL;
         $cid= $quity->id;
         $name=$quity->name;
         $logo=$quity->logo;
-    echo '#EXTINF:-1 tvg-id="'.$cid.'" tvg-name="'.$name.'" tvg-logo="'.$logo.'" group-title="星视界直播",'.$name.PHP_EOL.'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?id='.$cid.''.PHP_EOL;
+    echo '#EXTINF:-1 tvg-id="'.$cid.'" tvg-name="'.$name.'" tvg-logo="'.$logo.'" group-title="港澳直播",'.$name.PHP_EOL.'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?id='.$cid.''.PHP_EOL;
   }
 } elseif($type == 'json') {
   // 密钥错误，输出错误提示
@@ -208,7 +208,7 @@ echo '#EXTM3U'.PHP_EOL;
   $liebiao2=array(
     "AppStore" =>"http://".$_SERVER['HTTP_HOST']."/",
     "CreateBy" =>"庸俗的时光",
-    "title" =>"星视界直播",
+    "title" =>"港澳直播",
     "UpDate" =>"2022-09-14 14:02:33",
     "data" =>(
         $liebiao1
