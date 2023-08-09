@@ -159,7 +159,7 @@ echo '#EXTM3U'.PHP_EOL;
   }
   if(empty($_GET['key'])){
 $ssid=explode('_',$playurl);
-$stream = 'http://live-gitv-hb-yh.189smarthome.com/live/program/live/'.$ssid[0].'/'.$ssid[1].'/';
+$stream = 'http://ts-gitv-hb-yh.189smarthome.com/live/program/live/'.$ssid[0].'/'.$ssid[1].'/';
 //$timestamp = substr(time(), 0, 9) - 7;
 $timestamp = intval((time()-50)/10);
 $current = "#EXTM3U" . PHP_EOL;
