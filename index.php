@@ -1,0 +1,1 @@
+hahah构建成功<a href="/api/index.php">点击这里查看phpinfo</a>
