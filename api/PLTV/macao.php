@@ -93,7 +93,8 @@ $arryCount = preg_match_all('/(.*?.ts)/i', $m3u8, $arryList);
 	for($i = 0; $i < $arryCount; $i++) {
 $m3u8 = str_replace($arryList[0][$i],'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?id='.$cid.'&key='.$host.$arryList[0][$i], $m3u8);
 	}
-echo $m3u8;
+	header('Content-Type:application/vnd.apple.mpegurl');
+print($m3u8);
   //header('Location:'.$playurl);
 }else{
 header('Content-Type:video/mp2t');
