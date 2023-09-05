@@ -96,7 +96,9 @@ $m3u8 = str_replace($arryList[0][$i],'http://'.$_SERVER['HTTP_HOST'].$_SERVER['P
 echo $m3u8;
   //header('Location:'.$playurl);
 }else{
-    echo$ts=curl($_GET['key']);
+header('Content-Type:video/mp2t');
+    $ts=curl($_GET['key']);
+	print($ts);
     //$ts=Mcrypt::decode($_GET['key'],$key);
     //header('Location:'.$ts);
 }
