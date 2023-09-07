@@ -154,7 +154,7 @@ echo '#EXTM3U'.PHP_EOL;
         $cid= $quity->id;
         $name=$quity->name;
         $logo=$quity->logo;
-    echo '#EXTINF:-1 tvg-id="'.$name.'" tvg-name="'.$name.'" tvg-logo="'.$logo.'" group-title="百事可乐(可回看)",'.$name.PHP_EOL.'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?id='.$cid.'&/PLTV/hls.smil'.PHP_EOL;
+    echo '#EXTINF:-1 tvg-id="'.$name.'" tvg-name="'.$name.'" tvg-logo="'.$logo.'" group-title="百事可乐(可回看)",'.$name.PHP_EOL.'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?id='.$cid.PHP_EOL;
     //echo '#EXTINF:-1 tvg-id="'.$name.'" tvg-name="'.$name.'" tvg-logo="'.$logo.'" group-title="百事可乐(可回看)",'.$name.PHP_EOL.'http://'.$_SERVER['HTTP_HOST'].'/PLTV/3/224/3221221'.$cid.'/index.m3u8'.PHP_EOL;
   }
 } elseif($type == 'json') {
